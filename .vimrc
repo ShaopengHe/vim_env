@@ -41,7 +41,7 @@ Bundle 'tpope/vim-commentary'
 
 " Github repos of the user 'vim-scripts'
 " => can omit the username part
-" Bundle 'L9'
+Bundle 'vim-auto-save'
 
 " non github repos
 " Bundle 'git://git.wincent.com/command-t.git'
@@ -155,6 +155,10 @@ autocmd vimenter * NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " }
 
+" autosave {
+let g:auto_save = 1
+let g:auto_save_no_updatetime = 1
+"}
 " conf for tabs
 let mapleader=','
 nnoremap <C-l> gt
