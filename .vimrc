@@ -38,6 +38,9 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'Raimondi/delimitMate'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-commentary'
+Bundle 'rking/ag.vim'
+Bundle 'dyng/ctrlsf.vim'
+Bundle 'majutsushi/tagbar'
 
 " Github repos of the user 'vim-scripts'
 " => can omit the username part
@@ -159,9 +162,24 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 let g:auto_save = 1
 let g:auto_save_no_updatetime = 1
 "}
+" taglist for coffee {
+let g:tlist_coffee_settings = 'coffee;f:function;v:variable'
+let g:tagbar_type_coffee = {
+    \ 'ctagstype' : 'coffee',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 'm:methods',
+        \ 'f:functions',
+        \ 'v:variables',
+        \ 'f:fields',
+    \ ]
+\ }
+" } -- taglist
+"
 " conf for tabs
 let mapleader=','
 nnoremap <C-l> gt
 nnoremap <C-h> gT
 nnoremap <leader>t : tabe<CR>
 map <C-n> :NERDTreeToggle<CR>
+nmap <F8> :TagbarToggle<CR>
