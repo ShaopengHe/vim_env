@@ -22,33 +22,35 @@ set nocompatible
 filetype off    " required!
 
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " My Bundles here:
 "
 " original repos on github
-Bundle 'bling/vim-airline'
-Bundle 'scrooloose/nerdtree'
-Bundle 'kien/ctrlp.vim'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'Raimondi/delimitMate'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-commentary'
-Bundle 'rking/ag.vim'
-Bundle 'dyng/ctrlsf.vim'
-Bundle 'majutsushi/tagbar'
+Plugin 'bling/vim-airline'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'Raimondi/delimitMate'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-commentary'
+Plugin 'rking/ag.vim'
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'majutsushi/tagbar'
 
 " Github repos of the user 'vim-scripts'
 " => can omit the username part
-Bundle 'vim-auto-save'
+Plugin 'vim-auto-save'
 
 " non github repos
 " Bundle 'git://git.wincent.com/command-t.git'
 
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
 filetype plugin indent on   " required!
 " Vundle END
 
