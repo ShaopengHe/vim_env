@@ -185,3 +185,13 @@ nnoremap <C-h> gT
 nnoremap <leader>t : tabe<CR>
 map <C-n> :NERDTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
+
+" copy and paste
+" sudo apt-get install vim-gtk
+" vmap <C-c> "+yi
+" vmap <C-x> "+c
+" vmap <C-v> c<ESC>"+p
+" imap <C-v> <ESC>"+pa
+vnoremap <C-c> "+y
+map <C-c> "+yy
+map <C-x> "+p
