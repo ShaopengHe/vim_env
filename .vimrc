@@ -1,8 +1,4 @@
-
 " An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2008 Dec 17
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -41,6 +37,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'rking/ag.vim'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'tpope/vim-surround'
 
 " Github repos of the user 'vim-scripts'
 " => can omit the username part
@@ -59,8 +56,8 @@ set backspace=indent,eol,start
 
 if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file
+" else
+"   set backup		" keep a backup file
 endif
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
@@ -139,24 +136,24 @@ set bs=2		" 在insert模式下用退格键删除
 set showmatch		" 代码匹配
 set laststatus=2	" 总是显示状态栏
 set expandtab
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 set number
 
 set ignorecase
 set fileencodings=utf-8,gbk
 set hls
 set helplang=cn
-set foldmethod=syntax
+" set foldmethod=syntax
 set foldlevelstart=1
-let javaScript_fold=1
+" let javaScript_fold=1
 " }}
 " airline {
 let g:airline#extensions#tabline#enabled = 1
 " }
 
 " NERDTree {
-autocmd vimenter * NERDTree
+" autocmd vimenter * NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " }
 
@@ -178,6 +175,10 @@ let g:tagbar_type_coffee = {
 \ }
 " } -- taglist
 "
+" ctrlp {
+let g:ctrlp_working_path_mode = ''
+" }
+"
 " conf for tabs
 let mapleader=','
 nnoremap <C-l> gt
@@ -187,7 +188,6 @@ map <C-n> :NERDTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
 
 " copy and paste
-" sudo apt-get install vim-gtk
 " vmap <C-c> "+yi
 " vmap <C-x> "+c
 " vmap <C-v> c<ESC>"+p
