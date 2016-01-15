@@ -1,5 +1,8 @@
 " An example for a vimrc file.
 "
+" Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last change:	2008 Dec 17
+"
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
 "	      for Amiga:  s:.vimrc
@@ -16,6 +19,9 @@ endif
 set nocompatible
 " Vundle
 filetype off    " required!
+
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -38,6 +44,9 @@ Plugin 'rking/ag.vim'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'tpope/vim-surround'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'ternjs/tern_for_vim'
+Plugin 'Valloric/YouCompleteMe'
 
 " Github repos of the user 'vim-scripts'
 " => can omit the username part
@@ -139,6 +148,7 @@ set expandtab
 set shiftwidth=2
 set tabstop=2
 set number
+set cursorline
 
 set ignorecase
 set fileencodings=utf-8,gbk
@@ -148,6 +158,7 @@ set helplang=cn
 set foldlevelstart=1
 " let javaScript_fold=1
 " }}
+"
 " airline {
 let g:airline#extensions#tabline#enabled = 1
 " }
@@ -179,6 +190,12 @@ let g:tagbar_type_coffee = {
 let g:ctrlp_working_path_mode = ''
 " }
 "
+" tern {
+let g:tern_map_keys=1
+let g:tern_show_argument_hints='on_hold'
+set completeopt-=preview
+" }
+"
 " conf for tabs
 let mapleader=','
 nnoremap <C-l> gt
@@ -195,3 +212,6 @@ nmap <F8> :TagbarToggle<CR>
 vnoremap <C-c> "+y
 map <C-c> "+yy
 map <C-x> "+p
+
+" sort text
+map <C-o> :sort<CR>
