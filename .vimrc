@@ -1,8 +1,5 @@
 " An example for a vimrc file.
 "
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2008 Dec 17
-"
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
 "	      for Amiga:  s:.vimrc
@@ -13,30 +10,28 @@
 if v:progname =~? "evim"
   finish
 endif
-
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 " Vundle
 filetype off    " required!
 
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
-
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
-Plugin 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
 " My Bundles here:
 "
 " original repos on github
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdtree'
+" Plugin 'Xuyuanp/nerdtree-git-plugin'
+" Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
-Plugin 'kchmck/vim-coffee-script'
+" Plugin 'kchmck/vim-coffee-script'
 Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-commentary'
@@ -46,11 +41,19 @@ Plugin 'majutsushi/tagbar'
 Plugin 'tpope/vim-surround'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'ternjs/tern_for_vim'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe', { 'do': '/usr/local/bin/python3 install.py' }
+Plugin 'tenfyzhong/CompleteParameter.vim'
+Plugin 'dimasg/vim-mark'
+Plugin 'moll/vim-node'
+" Plugin 'vim-syntastic/syntastic'
+Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plugin 'w0rp/ale'
+Plugin 'iamcco/markdown-preview.vim'
+Plugin 'sonph/onehalf', {'rtp': 'vim/'}
 
 " Github repos of the user 'vim-scripts'
 " => can omit the username part
-Plugin 'vim-auto-save'
+" Plugin 'vim-auto-save'
 
 " non github repos
 " Bundle 'git://git.wincent.com/command-t.git'
@@ -68,15 +71,9 @@ if has("vms")
 " else
 "   set backup		" keep a backup file
 endif
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
 
-" Don't use Ex mode, use Q for formatting
-map Q gq
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
@@ -136,54 +133,87 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-set t_Co=256
+" performance {
+set ttyfast
+" set lazyredraw
+set scrolljump=8
+" }
+
+" color {
 syn on
+set t_Co=256
 set background=dark
-colorscheme jellybeans 
-" common conf {{
-set bs=2		" 在insert模式下用退格键删除
-set showmatch		" 代码匹配
+" colorscheme molokai
+colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
+" }
+
+" macvim {
+set guifont=Menlo\ Regular:h16
+set linespace=2
+set guioptions-=r
+set guioptions-=L
+" }
+"
+" tab {
+set expandtab     " 使用空格代替tab
+set shiftwidth=2  " 设定indent为n个空格
+set tabstop=2     " 设定tab长度为n个空格
+set softtabstop=2 " 退格时可以一次删掉n个空格
+" }
+
+set cmdheight=2
+set history=50		" keep 50 lines of command line history
+" set ruler		      " show the cursor position all the time
+" set showcmd		    " display incomplete commands
+set helplang=cn
+set bs=2		      " 在insert模式下用退格键删除
+set showmatch		  " 代码匹配
 set laststatus=2	" 总是显示状态栏
-set expandtab
-set shiftwidth=2
-set tabstop=2
 set number
 set cursorline
-
-set ignorecase
 set fileencodings=utf-8,gbk
+set wrap          " 自动折行
+map j gj
+map k gk
+
+" search {
 set hls
-set helplang=cn
-" set foldmethod=syntax
-set foldlevelstart=1
-" let javaScript_fold=1
-" }}
-"
+set ignorecase
+set incsearch		  " do incremental searching
+" }
+
+" fold {
+set foldmethod=syntax
+set foldenable!
+"}
+
 " airline {
 let g:airline#extensions#tabline#enabled = 1
 " }
 
 " NERDTree {
 " autocmd vimenter * NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }
 
 " autosave {
 let g:auto_save = 1
 let g:auto_save_no_updatetime = 1
+let g:auto_save_in_insert_mode = 0
 "}
 " taglist for coffee {
-let g:tlist_coffee_settings = 'coffee;f:function;v:variable'
-let g:tagbar_type_coffee = {
-    \ 'ctagstype' : 'coffee',
-    \ 'kinds'     : [
-        \ 'c:classes',
-        \ 'm:methods',
-        \ 'f:functions',
-        \ 'v:variables',
-        \ 'f:fields',
-    \ ]
-\ }
+" let g:tlist_coffee_settings = 'coffee;f:function;v:variable'
+" let g:tagbar_type_coffee = {
+"     \ 'ctagstype' : 'coffee',
+"     \ 'kinds'     : [
+"         \ 'c:classes',
+"         \ 'm:methods',
+"         \ 'f:functions',
+"         \ 'v:variables',
+"         \ 'f:fields',
+"     \ ]
+" \ }
 " } -- taglist
 "
 " ctrlp {
@@ -196,22 +226,109 @@ let g:tern_show_argument_hints='on_hold'
 set completeopt-=preview
 " }
 "
-" conf for tabs
-let mapleader=','
+" syntastic {
+"
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+" let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 1
+" }
+"
+" nerdtree-git-plugin {
+" let g:NERDTreeIndicatorMapCustom = {
+"       \ "Untracked" : '?',
+"       \ "Modified"  : '✱',
+"       \ "Staged"    : '✔︎',
+"       \ "Renamed"   : '➜',
+"       \ "Unmerged"  : 'j',
+"       \ "Deleted"   : '✖',
+"       \ "Dirty"     : '!',
+"       \ "Clean"     : 'o',
+"       \ "Unknown"   : '?'
+"       \ }
+"}
+"
+" vim-gitgutter {
+" let g:gitgutter_sign_added = '✚'
+" let g:gitgutter_sign_modified = '✱'
+" let g:gitgutter_sign_removed = '➡'
+" let g:gitgutter_sign_removed_first_line = '➜'
+" let g:gitgutter_sign_modified_removed = '➽'
+" }
+"
+" ale {
+" let g:ale_linters = {
+" \  'javascript': ['eslint'],
+" \}
+let g:ale_sign_error = '••'
+let g:ale_sign_warning = '・'
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+let g:airline#extensions#ale#enabled = 1
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+" highlight clear ALEErrorSign
+" highlight clear ALEWarningSign
+" }
+"
+" python-mode {
+let g:pymode_lint = 0
+let g:pymode_lint_unmodified = 0
+let g:pymode_options_max_line_length=120
+let g:pymode_python = 'python3'
+let g:pymode_rope = 0
+let g:pymode_virtualenv = 1
+" }
+
+let mapleader='\'
 nnoremap <C-l> gt
 nnoremap <C-h> gT
-nnoremap <leader>t : tabe<CR>
+" nnoremap <leader>t : tabe<CR>
 map <C-n> :NERDTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
 
 " copy and paste
+set clipboard=unnamed
+
 " vmap <C-c> "+yi
 " vmap <C-x> "+c
 " vmap <C-v> c<ESC>"+p
 " imap <C-v> <ESC>"+pa
-vnoremap <C-c> "+y
-map <C-c> "+yy
-map <C-x> "+p
+" vnoremap <C-c> "+y
+" map <C-c> "+yy
+" map <C-x> "+p
 
 " sort text
 map <C-o> :sort<CR>
+
+" vim-node
+map gvf <C-W>vgf
+map gxf <C-W>f
+
+" vim-fugitive
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gf :Gvdiff<CR>
+
+" CompleteParameter
+inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+
+" YouCompleteMe
+nnoremap <leader>gpd :split<CR>:exec("YcmComplete GoToDefinitionElseDeclaration")<CR>
+
+
+" Ale
+nmap <silent> <C-k> <Plug>(ale_previous_wrap_error)
+nmap <silent> <C-j> <Plug>(ale_next_wrap_error)
