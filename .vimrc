@@ -45,15 +45,22 @@ Plugin 'Valloric/YouCompleteMe', { 'do': '/usr/local/bin/python3 install.py' }
 Plugin 'tenfyzhong/CompleteParameter.vim'
 Plugin 'dimasg/vim-mark'
 Plugin 'moll/vim-node'
+Plugin 'fatih/vim-go'
 " Plugin 'vim-syntastic/syntastic'
 Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plugin 'w0rp/ale'
 Plugin 'iamcco/markdown-preview.vim'
+
+" colorscheme
 Plugin 'sonph/onehalf', {'rtp': 'vim/'}
+Plugin 'drewtempelmeyer/palenight.vim'
+Plugin 'mhartington/oceanic-next'
+Plugin 'kaicataldo/material.vim', { 'branch': 'main' }
+Plugin 'pseewald/vim-anyfold'
 
 " Github repos of the user 'vim-scripts'
 " => can omit the username part
-" Plugin 'vim-auto-save'
+Plugin 'vim-auto-save'
 
 " non github repos
 " Bundle 'git://git.wincent.com/command-t.git'
@@ -138,14 +145,22 @@ set ttyfast
 " set lazyredraw
 set scrolljump=8
 " }
-
+"
 " color {
 syn on
 set t_Co=256
+if (has("termguicolors"))
+  set termguicolors
+endif
 set background=dark
 " colorscheme molokai
-colorscheme onehalfdark
-let g:airline_theme='onehalfdark'
+" colorscheme onehalfdark
+" let g:airline_theme='onehalfdark'
+colorscheme palenight
+let g:airline_theme='palenight'
+let g:palenight_terminal_italics=1
+" colorscheme OceanicNext 
+" let g:airline_theme='oceanicnext'
 " }
 
 " macvim {
@@ -165,7 +180,7 @@ set softtabstop=2 " 退格时可以一次删掉n个空格
 set cmdheight=2
 set history=50		" keep 50 lines of command line history
 " set ruler		      " show the cursor position all the time
-" set showcmd		    " display incomplete commands
+set showcmd		    " display incomplete commands
 set helplang=cn
 set bs=2		      " 在insert模式下用退格键删除
 set showmatch		  " 代码匹配
@@ -184,9 +199,16 @@ set incsearch		  " do incremental searching
 " }
 
 " fold {
-set foldmethod=syntax
-set foldenable!
-"}
+" set foldmethod=syntax
+" set foldenable!
+autocmd Filetype * AnyFoldActivate
+set foldlevel=99
+" }
+
+" undo持久化 {
+set undofile
+set undodir=~/.vim/undodir
+" }
 
 " airline {
 let g:airline#extensions#tabline#enabled = 1
@@ -295,6 +317,9 @@ nnoremap <C-h> gT
 " nnoremap <leader>t : tabe<CR>
 map <C-n> :NERDTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
+map <C-t> :tab split<CR>
+map <C-h> :tabprevious<CR>
+map <C-l> :tabnext<CR>
 
 " copy and paste
 set clipboard=unnamed
@@ -328,7 +353,10 @@ imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
 " YouCompleteMe
 nnoremap <leader>gpd :split<CR>:exec("YcmComplete GoToDefinitionElseDeclaration")<CR>
 
-
 " Ale
 nmap <silent> <C-k> <Plug>(ale_previous_wrap_error)
 nmap <silent> <C-j> <Plug>(ale_next_wrap_error)
+
+" vim-anyfold
+map <c-]> za
+hi Folded ctermfg=235 ctermbg=39 guifg=#292D3E guibg=#939ede
